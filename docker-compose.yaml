@@ -1,0 +1,42 @@
+# Docker Compose — Dia TTS (VOXSYNTH)
+#
+# CPU:  docker compose up --build
+# GPU:  docker compose -f docker-compose.yaml -f docker-compose.gpu.yaml up --build
+#
+# Then open http://localhost:3000 in your browser.
+
+services:
+  # ---------- API ----------
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - api/.env
+    environment:
+      - DIA_HOST=0.0.0.0
+      - DIA_PORT=8000
+      - DIA_CORS_ORIGINS=["http://localhost:3000"]
+    volumes:
+      - hf-cache:/home/appuser/.cache/huggingface
+      - api-tmp:/app/tmp
+    restart: unless-stopped
+
+  # ---------- Frontend ----------
+  frontend:
+    build:
+      context: frondend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  api-tmp:
+  hf-cache:

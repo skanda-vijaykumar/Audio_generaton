@@ -1,0 +1,10 @@
+**/.git
+**/.env
+**/.env.local
+**/node_modules
+**/__pycache__
+**/.next
+**/tmp
+**/*.pyc
+.dockerignore
+docker-compose.yaml

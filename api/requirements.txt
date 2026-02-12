@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+python-multipart
+sse-starlette
+pydantic-settings
+numpy
+soundfile
+# torch and torchaudio are installed separately in Docker (CPU/GPU variants).
+# Include here for local `pip install -r requirements.txt` convenience.
+torch==2.6.0
+torchaudio==2.6.0
+descript-audio-codec>=1.0.0
+huggingface-hub>=0.30.2
+safetensors>=0.5.3

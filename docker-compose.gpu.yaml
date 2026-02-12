@@ -1,0 +1,15 @@
+# GPU override — swaps the CPU API image for the CUDA variant
+# Usage: docker compose -f docker-compose.yaml -f docker-compose.gpu.yaml up --build
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile.gpu
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
