@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN useradd -m -u 1001 appuser && \
     mkdir -p /app/tmp/uploads /app/tmp/outputs \
-             /home/appuser/.cache/huggingface && \
-    chown -R appuser:appuser /app /home/appuser/.cache
+             /app/models/cache && \
+    chown -R appuser:appuser /app
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ WORKDIR /app
 # --extra-index-url lets torch deps (typing-extensions, jinja2 etc.) resolve from PyPI.
 COPY api/requirements.txt /app/api/requirements.txt
 RUN pip install --no-cache-dir \
-    torch==2.6.0+cu121 torchaudio==2.6.0+cu121 \
+    torch==2.5.1+cu121 torchaudio==2.5.1+cu121 \
     --extra-index-url https://download.pytorch.org/whl/cu121 && \
     pip install --no-cache-dir -r /app/api/requirements.txt
 
@@ -37,6 +37,9 @@ USER appuser
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app \
+    HF_HOME=/app/models/cache \
+    TRANSFORMERS_CACHE=/app/models/cache \
+    HF_HUB_CACHE=/app/models/cache/hub \
     DIA_HOST=0.0.0.0 \
     DIA_PORT=8000 \
     DIA_UPLOAD_DIR=/app/tmp/uploads \

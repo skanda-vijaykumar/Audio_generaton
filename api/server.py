@@ -193,6 +193,8 @@ async def health():
         "model_loading": _model_loading,
         "model_status": model_manager.status,
         "model_error": model_manager.error,
+        "download_progress": model_manager.download_progress,
+        "download_stage": model_manager.download_stage,
         "device": str(model_manager.device) if model_manager.is_loaded else None,
     }
 

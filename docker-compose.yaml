@@ -20,7 +20,7 @@ services:
       - DIA_PORT=8000
       - DIA_CORS_ORIGINS=["http://localhost:3000"]
     volumes:
-      - hf-cache:/home/appuser/.cache/huggingface
+      - ./models:/app/models
       - api-tmp:/app/tmp
     restart: unless-stopped
 
@@ -39,4 +39,3 @@ services:
 
 volumes:
   api-tmp:
-  hf-cache:

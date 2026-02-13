@@ -18,12 +18,12 @@ class Settings(BaseSettings):
     output_dir: str = "./tmp/outputs"
     max_upload_size_mb: int = 50
 
-    # Generation defaults
-    max_tokens: int = 3072
-    cfg_scale: float = 3.0
-    temperature: float = 1.2
-    top_p: float = 0.95
-    cfg_filter_top_k: int = 45
+    # Generation defaults (optimized for CPU)
+    max_tokens: int = 128  # Further reduced for much faster CPU generation
+    cfg_scale: float = 2.0  # Reduced for faster inference
+    temperature: float = 1.0
+    top_p: float = 0.9
+    cfg_filter_top_k: int = 20  # Reduced for faster inference
 
     model_config = {"env_prefix": "DIA_"}
 
